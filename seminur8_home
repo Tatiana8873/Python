@@ -1,0 +1,53 @@
+# Вычислить значение выражения
+# Уровень 1:
+# 1 действие
+# 2 аргумента 12 + 15
+# Уровень 2:
+# Количество действий произвольное
+# 12 + 15 - 4
+# Уровень 3:
+# Действия имеют приоритет
+# 12 - 4*2 +6/3
+# Уровень 4 * (дополнительная задача, сдавать не обязательно)
+# Действия разделяются скобками
+# (12 - 4) * 2
+
+n = '12 * 4 - 2 + 6 / 3'
+print(n)
+m = n.split()
+m2 = []
+print(m)
+
+def calc(a,b,exp):
+    if exp == '+':
+        return (a+b)
+    elif exp == '-':
+        return (a-b)
+    elif exp == '/':
+        return (a/b)
+    elif exp == '*':
+        return (a*b)
+
+result = int(m[0])
+
+for i in range(1, len(m) - 1, 2):
+    if m[i] == '*' or m[i] == '/':
+        result = calc(int(m[i - 1]), int(m[i + 1]), m[i])
+        m2.append(result)
+        if m[1] == '+' or m[1] == '-':
+            m2.append(int(m[0]))
+    else:
+        m2.append(m[i])
+        if m[i + 2] == '+' or m[i + 2] == '-':
+            m2.append(int(m[i + 1]))
+
+if m[1] == '+' or m[1] == '-':
+    if m2:
+        m2.insert(0, m2.pop())         
+print(m2)
+
+res = int(m2[0])
+for i in range(1, len(m2) - 1, 2):
+    res = calc(res, int(m2[i + 1]), m2[i])
+print(res)
+
